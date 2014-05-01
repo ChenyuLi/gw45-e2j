@@ -1,0 +1,22 @@
+//group e2j
+//Note, this is also included in out .java files as comment
+
+1. For a grid with r rows and c columns, the sparse array has length r. Each of the linked lists has maximum
+length c.
+
+Implement the methods specified by the Grid interface using this data structure. Why is this a more timeefficient
+implementation than BoundedGrid?
+
+SparseBounded Grid is much more time efficient than Bounded Grid. As the size of grid gets very large, getOccupiedLocations()'s run time also increases (as we must traverse through the grid. In a BoundedGrid, the run time is O(r*c), as it traverse through every location on the grid. However, the runtime for our SparseBoundedGrid is simply(r+n), where n is the number of items in the grid. This is because, unlike BoundedGrid, which has constant row and col, SparseBoundedGrid only has a constant row. Its col depends on how many elements are in each SparseNode Linked List. Thus, it only traverse through each row, and then down each linked list until it reaches null. Basically, BoundedGrid has empty spaces that are eliminated by SparseBoundedGrid.
+
+3. Consider this implementation of an unbounded grid in which all valid locations have non-negative row and
+column values. The constructor allocates a 16 x 16 array. When a call is made to the put method with a row
+or column index that is outside the current array bounds, double both array bounds until they are large enough,
+construct a new square array with those bounds, and place the existing occupants into the new array.
+Implement the methods specified by the Grid interface using this data structure. What is the Big-Oh
+efficiency of the get method? What is the efficiency of the put method when the row and column index
+values are within the current array bounds? What is the efficiency when the array needs to be resized?
+
+get: O(1), just [][]
+put: O(1) if new element put within the current bounds, just [][]
+     O(n^2), where n is the array before resizing. As elements of the old array must be copied into new array 
