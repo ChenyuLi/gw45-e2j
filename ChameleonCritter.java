@@ -11,7 +11,8 @@ import java.util.ArrayList;
  */
 public class ChameleonCritter extends Critter
 {
-
+	
+    //similar implementation of a Flower
     private static final double DARKENING_FACTOR = 0.05;
 
     /**
@@ -37,13 +38,4 @@ public class ChameleonCritter extends Critter
         setColor(other.getColor());
     }
 
-
-    /**
-     * Turns towards the new location as it moves.
-     */
-    public void makeMove(Location loc)
-    {
-        setDirection(getLocation().getDirectionToward(loc));
-        super.makeMove(loc);
-    }
 }
