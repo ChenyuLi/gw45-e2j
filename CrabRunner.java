@@ -38,10 +38,10 @@ public class CrabRunner
         world.add(new Location(7, 8), new Flower());
         world.add(new Location(2, 2), new Flower());
         world.add(new Location(3, 5), new Flower());
-        //world.add(new Location(3, 8), new ChameleonCritter());
+        world.add(new Location(3, 8), new ChameleonCritter());
         world.add(new Location(6, 5), new ChameleonKid());
         world.add(new Location(5, 3), new RockHound());
-        //world.add(new Location(4, 5), new KingCrab());
+        world.add(new Location(4, 5), new KingCrab());
         //world.add(new Location(6, 1), new BlusterCritter(1));
         world.add(new Location(7, 4), new QuickCrab());
         world.show();
