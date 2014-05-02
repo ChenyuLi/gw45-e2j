@@ -1,0 +1,100 @@
+//Team e2j (Eric, Justin, Joanne)
+//APCS pd08
+//HW35 -- GridWorld, Part 5
+//2014-04-30
+
+Set 10: by Joanne Yang
+
+1. Where is the isValid method specified? Which classes provide an implementation of this method?
+The isValid method is specified in the Grid interface. The BoundedGrid and UnboundedGrid classes provide an implementation of this method.
+
+2. Which AbstractGrid methods call the isValid method? Why don't the other methods need to call it?
+getValidAdjacentLocations calls the isValid method. The other methods do not need to call isValid because they can call getValidAdjacentLocations instead to verify if a location is in the grid.
+
+3. Which methods of the Grid interface are called in the getNeighbors method? Which classes provide implementation of these methods?
+getOccupiedAdjacentLocations and get are the methods of the Grid interface that are called in the getNeighbors method. getOccupiedAdjacentLocations is implemented by the AbstractGrid class. get is implemented by BoundedGrid and UnboundedGrid.
+
+4. Why must the get method, which returns an object of type E, be used in the getEmptyAdjacentLocations method when this method returns locations, not objects of type E?
+The getEmptyAdjacentLocations method uses the get method to compare an object at a given location to null. If it is null, the empty location is added to an ArrayList instead of an object of type E.
+
+5. What would be the effect of replacing the constant Location.HALF_RIGHT with Location.RIGHT in the two places where it occurs in the getValidAdjacentLocations method?
+Replacing Location.HALF_RIGHT with Location.RIGHT would have the method return an ArrayList of valid adjacent locations only to the north, east, west, or south of the given location.
+
+Set 11: by Justin Strauss
+
+1. What ensures that a grid has at least one valid location?
+BoundedGrid's default constructor will throw an IllegalArgumentExpection if the number of rows or columns is less than or equal to 0.
+
+2. How is the number of columns in the grid determined by the getNumCols
+method? What assumption about the grid makes this possible?
+It is determined by finding the length of the first row of the occupantArray. It assumes that numRows() > 0.
+
+3. What are the requirements for a Location to be valid in a BoundedGrid?
+It must satisfy the following conditions: 0 <= loc.getRow() < getNumRows() and 0 <= loc.getCol() < getNumCols().
+
+In the next four questions, let r = number of rows, c = number of columns, and n = number of occupied locations.
+
+4. What type is returned by the getOccupiedLocations method? What is the time complexity (Big-Oh) for this method?
+An ArrayList of Locations is returned by the getOccupiedLocations method. It runs in O(n^2) time due to a pair of nested for loops.
+
+5. What type is returned by the get method? What parameter is needed? What is the time complexity (Big-Oh) for this method?
+An Object of type E is returned by the get method. A location is required as a parameter. It runs in O(1) constant time.
+
+6. What conditions may cause an exception to be thrown by the put method? What is the time complexity (Big-Oh) for this method?
+If the location isn't valid or if the object is null, and exception is thrown by the put method. It runs in O(1) constant time.
+￼￼￼￼￼
+7. What type is returned by the remove method? What happens when an attempt is made to remove an item from an empty location? What is the time complexity (Big-Oh) for this method?
+An Object of type E is returned by the get method. When an attempt is made to remove an item from an empty location, an IllegalArgumentException is thrown. It runs in O(1) constant time.
+
+8. Based on the answers to questions 4, 5, 6, and 7, would you consider this an efficient implementation? Justify your answer.
+I would consider this to be an efficent implementation because the use of a 2D array allows most methods to run in constant time.
+
+Set 12: by Eric Li
+
+1. Which method must the Location class implement so that an instance of HashMap can be used for the map? What would be required of the Location class if a TreeMap were used instead? Does Location satisfy these requirements?
+It must implement hashCode and equals methods.
+	hashCode: return value of the locations when two are equal (after tested by equals method).
+	Location: implement Comparable interface. Thus, for Location to be non-abstract, it must implement compareTo, which returng 0 if two locations are equal (after tested by equals method). 
+	TreeMap: needs keys of 
+map to be Comparable.
+	Location class satisfies all of the above requirements.
+
+2. Why are the checks for null included in the get, put, and remove methods? Why are no such checks included in the corresponding methods for the BoundedGrid?
+	
+UnboundedGrid: uses a HashMap as data structure that hold items in grid.Locations are valid when they are not null. However, for hashMap, null is a possible value for the key.If they are valid (after tested by isValid), then true is returned, and null locations are not checked. Null is not a valid location for an UnboundedGrid, then, its get, put and remove throw a nullpointerexception if parameter is null. 
+	BoundedGrid: isValid is called before a location is used with get, put ,and remove. If location is null, loc.getRow() throws a null-pointer exception. If get, put and remove were used before isValid, they would still throw the nullpointer exception.
+
+3. What is the average time complexity (Big-Oh) for the three methods: get, put, and remove? What would it be if a TreeMap were used instead of a HashMap?
+	HashMap:O(1) for get, put, remove--just accessing, adding, and deleting, no shifting involved.
+
+	TreeMap: O(logn) for these methods, n is number of occupied locations in grid. Tree is like divide and conquer, we divide two over and over again until we get one empty branch. 
+
+4. How would the behavior of this class differ, aside from time complexity, if a TreeMap were used instead of a HashMap? 
+	
+HashMap: keys are used. They represent locations, and are placed in a hashtable. Its index is calculated by its hashCode and size of table. Data stored are accessed when the keySet is traversed. 
+	TreeMap: stores its key in a binary-search like tree, and travels down the branch. Keys are visited in ascending order.
+	The order of locations (keys) visited thus different for the two different data structures.
+
+5. Could a map implementation be used for a bounded grid? What advantage, if any, would the two-dimensional array implementation that is used by the BoundedGrid class have over a map implementation?
+	
+Yes,a map can be used to implement bounded grid.
+	HashMapL use fore memory, as it stores the item and its key (location).
+	Array: stores only item, its location is indicated in [][] notation.
+
+Exercises: by Eric Li
+
+1. For a grid with r rows and c columns, the sparse array has length r. Each of the linked lists has maximum
+length c.
+
+Implement the methods specified by the Grid interface using this data structure. Why is this a more timeefficient
+implementation than BoundedGrid?
+
+SparseBounded Grid is much more time efficient than Bounded Grid. As the size of grid gets very large, getOccupiedLocations()'s run time also increases (as we must traverse through the grid. In a BoundedGrid, the run time is O(r*c), as it traverse through every location on the grid. However, the runtime for our SparseBoundedGrid is simply(r+n), where n is the number of items in the grid. This is because, unlike BoundedGrid, which has constant row and col, SparseBoundedGrid only has a constant row. Its col depends on how many elements are in each SparseNode Linked List. Thus, it only traverse through each row, and then down each linked list until it reaches null. Basically, BoundedGrid has empty spaces that are eliminated by SparseBoundedGrid.
+
+3. Consider this implementation of an unbounded grid in which all valid locations have non-negative row and column values. The constructor allocates a 16 x 16 array. When a call is made to the put method with a row or column index that is outside the current array bounds, double both array bounds until they are large enough, construct a new square array with those bounds, and place the existing occupants into the new array. Implement the methods specified by the Grid interface using this data structure. What is the Big-Oh efficiency of the get method? What is the efficiency of the put method when the row and column index values are within the current array bounds? What is the efficiency when the array needs to be resized?
+
+get: O(1), just [][]
+put: O(1) if new element put within the current bounds, just [][]
+     O(n^2), where n is the array before resizing. As elements of the old array must be copied into new array
+
+MunchyCritter Class on GitHub by Justin Strauss
