@@ -2,6 +2,7 @@ import info.gridworld.actor.Actor;
 import info.gridworld.actor.Critter;
 import info.gridworld.grid.Location;
 import java.awt.Color;
+import info.gridworld.grid.Grid;
 
 import java.util.ArrayList;
 
@@ -38,9 +39,10 @@ public class BlusterCritter extends Critter
 	for( int r = loc.getRow()-2; r < loc.getRow()+2; r++ )
 	    for( int c = loc.getCol()-2; c < loc.getCol()+2; c++ ) {
 		Location newLoc = new Location( r, c );
-		arr.add( getGrid().get(newLoc) );
+		
+		if( getGrid().isValid(newLoc) && getGrid().get(newLoc) != null )
+		    arr.add( getGrid().get(newLoc) );
 	    }
-
 	return arr;
     }
 
