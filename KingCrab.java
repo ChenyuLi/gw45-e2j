@@ -26,7 +26,7 @@ public class KingCrab extends CrabCritter
     {
 	for (Actor a : actors)
         {
-	    ArrayList<Actors> arr = getGrid().getEmptyAdjacentLocations(a.getLocation());
+	    ArrayList<Location> arr = getGrid().getEmptyAdjacentLocations(a.getLocation());
 	    if( arr.size() == 0 )
                 a.removeSelfFromGrid();
 	    int r = (int) (Math.random()*arr.size());
