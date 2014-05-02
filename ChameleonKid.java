@@ -28,6 +28,7 @@ public class ChameleonKid extends ChameleonCritter
             if (getGrid().get(loc) != null)
                 arr.add(getGrid().get(loc));
         return arr;
+    }
         
      /**
      * Finds the valid adjacent locations of this critter in different
