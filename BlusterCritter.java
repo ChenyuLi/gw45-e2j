@@ -56,7 +56,7 @@ public class BlusterCritter extends Critter
         int n = actors.size();
         if (n == 0)
 	    return;
-	else if ( n < c ) {
+	else if ( n < courage ) {
 	    Color c = getColor();
 	    int red = (int) (c.getRed() * (1 + BRIGHTENING_FACTOR));
 	    int green = (int) (c.getGreen() * (1 + BRIGHTENING_FACTOR));
@@ -64,7 +64,7 @@ public class BlusterCritter extends Critter
 	    
 	    setColor(new Color(red, green, blue));
 	}
-	else if ( n > c ) {
+	else if ( n > courage ) {
 	    Color c = getColor();
 	    int red = (int) (c.getRed() * (1 - DARKENING_FACTOR));
 	    int green = (int) (c.getGreen() * (1 - DARKENING_FACTOR));
