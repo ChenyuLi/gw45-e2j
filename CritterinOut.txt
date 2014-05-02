@@ -1,0 +1,117 @@
+//Team e2j (Eric, Justin, Joanne)
+//APCS pd08
+//HW34 -- GridWorld, Part 4
+//2014-04-29
+
+Do You Know?
+Set 7 by Joanne Yang
+
+1. What methods are implemented in Critter?
+act(), getActors(), processActors(ArrayList<Actor> actors), getMoveLocations(), selectMoveLocation(ArrayList<Location> locs), makeMove(Location loc)
+
+2. What are the five basic actions common to all critters when they act?
+getActors(), processActors(ArrayList<Actor> actors), getMoveLocations(), selectMoveLocation(ArrayList<Location> locs), makeMove(Location loc)
+
+3. Should subclasses of Critter override the getActors method? Explain.
+Subclasses of Critter should override the getActors method because the actors could be in different locations.
+
+4. Describe three ways that a critter could process actors.
+A critter could process actors by adding new actors to old locations, removing actors, and moving them to a given location.
+
+5. What three methods must be invoked to make a critter move? Explain each of these methods.
+getMoveLocations() -- Gets a list of possible empty adjacent locations for the next move
+selectMoveLocation(ArrayList<Location> locs) -- Randomly selects a location from list for the next move
+makeMove(Location loc) -- Moves the critter to the given location
+
+6. Why is there no Critter constructor?
+Critter extends Actor and it inherits the default constructor in Actor.
+
+Do You Know?
+Set 8 by Justin Strauss
+
+1. Why does act cause a ChameleonCritter to act differently from a
+Critter even though ChameleonCritter does not override act?
+Act causes a ChameleonCritter to act differently from a
+Critter because a ChameleonCritter processes actors by randomly selecting one and changes its own color to the color of the selected actor.
+
+2. Why does the makeMove method of ChameleonCritter call
+super.makeMove?
+This method calls super.makeMove because it uses the makeMove method of the Critter superclass.
+
+3. How would you make the ChameleonCritter drop flowers in its old
+location when it moves?
+You can make the ChameleonCritter do this by adding the following lines to the end of the makeMove method.
+Actor flower = new Flower();
+flower.putSelfInGrid(this.getGrid(),loc);
+
+4. Why doesn’t ChameleonCritter override the getActors method?
+ChameleonCritter doesn't override the getActors method because it follows the behavior of the getActors method in the Critter superclass.
+
+5. Which class contains the getLocation method?
+The Actor class contains the getLocation method because this is something all actors can do.
+
+6. How can a Critter access its own grid?
+A Critter can access its own grid by calling the getGrid method in the Actor class.
+
+Do You Know?
+Set 9 by Eric Li
+
+1. Why doesn’t CrabCritter override the processActors method?
+
+processActors method eats the neighboring actor. This is exactly what a CrabCritter does, thus, there is no need to override the method inherited from Critter class. Unlike the ChameleonCritters, which override processActors to change color instead of exterminate its neighbor, CrabCritter just eats its neighbor.
+
+2. Describe the process a CrabCritter uses to find and eat other actors. Does it always eat all neighboring actors? Explain.
+
+CrabCritter uses getACtor to find other actors. This method only looks at locations immediately in front, to its front-right and to its front-left. Thus only these will be eaten by processActors, the rest are spared.
+
+3. Why is the getLocationsInDirections method used in CrabCritter?
+
+getLocationsInDirections is a list of locations in the list of directions given. This is iterated through in getActors to look for locations (and the actors on those locations) in the three directions mentioned earlier.
+
+4. If a CrabCritter has location (3, 4) and faces south, what are the possible locations for actors that are returned by a call to the getActors method?
+
+The three locations in front of it (slight right and left and straight forward) are (4,3), (4,4), and (4,5).
+
+5. What are the similarities and differences between the movements of a CrabCritter and a Critter?
+
+Similarity: neither CrabCritter nor Critter move in the direction it is facing or turn towards the direction it is moving. Rather, it randomly choose from a list of possible locations it can move into.
+
+Difference: CrabCritter only moves left and right, as a proper crabby does. Critter can go in any of the 8 directions. Moreover, Critter turns randomly after it moves, crab doesn't.
+
+6. How does a CrabCritter determine when it turns instead of moving?
+
+makeMove(loc) usually moves CrabCritter. But if loc is the CrabCritter's current location, it randomly turns crab left or right.
+
+7. Why don’t the CrabCritter objects eat each other?
+
+In Critter, the processActor method only eats actors, not critters and rocks. This is inherited by CrabCritter, which behaves the same way.
+
+A new type of Critter has appeared on the scene:
+Bishop Critter Specs: by Eric Li
+	Critter faces only one of the 4 diagonal directions (initial direction is then one of NW,NE,SE,SW set in the constructor). It can only turn towards one of the diagonal direction (so 90 turns in the turn method). If moves forward diagonally one step at a time in the direction it faces (move method). It eats any actor in its way (processActor method). The critter always move forward until it eats an actor, or encounters another rock or critter, at which point it turns to one of the diagonal directions.
+
+Bishop Critter Test Cases: by Justin Strauss
+
+BishopCritter b1 = new BishopCritter(NORTHEAST);
+Location loc = new Location(0,0);
+Grid gr = new UnboundedGrid();
+b1.putSelfInGrid(gr,loc);
+
+Critter obstacle1  = new Critter();
+Location l1 = new Location(1,1);
+ostacle1.putSelfInGrid(gr,l1);
+
+Critter obstacle2 = new Critter();
+Location l2 = new Location(1,-1);
+obstacle2.putSelfInGrid(gr,l2);
+
+Critter obstacle23 = new Critter();
+Location l3 = new Location(-1,-1);
+obstacle3.putSelfInGrid(gr,l3);
+
+b1.move(); //should now face SOUTHEAST
+b1.move(); //should now face SOUTHWEST
+b1.move(); //should now face NORTHWEST
+b1.move(); //should now be at loc(-1,1)
+
+Exercise Classes on GitHub by Joanne Yang
